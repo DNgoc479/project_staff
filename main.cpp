@@ -8,7 +8,8 @@ using namespace std;
 void menu(){
     cout <<"===========================================" <<endl;
     cout <<"= 1-Nhap nhan vien                        =" << endl;
-    cout <<"= 2-Tim Thong tin nhan vien               =" << endl;
+    cout <<"= 2-In tat ca cac nha vien                =" << endl;
+    cout <<"= 3-Tim Thong tin nhan vien               =" << endl;
     cout <<"===========================================" <<endl;
     cout << "Chon chuc nang (1-2):" << endl;
     cout << "Moi ban nhap lai lua chon:  ";
