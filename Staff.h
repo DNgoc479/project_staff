@@ -1,6 +1,7 @@
 #ifndef STAFF_H
 #define STAFF_H
 #include <iostream>
+#include <map>
 using namespace  std;
 class Staff{
 
@@ -17,19 +18,22 @@ public:
     void setAddress(string address){};
     void setWDepartment(string wDepartment){};
 
-    string getId(){return  _id;};
-    string getName(){return  _name;};
-    string getBirthday(){return _birthday;};
-    string getAddress(){return _address;};
-    string getWDepartment(){return  _wDepartment;};
+    string getId(){return  this->_id;};
+    string getName(){return  this->_name;};
+    string getBirthday(){return this->_birthday;};
+    string getAddress(){return this->_address;};
+    string getWDepartment(){return  this->_wDepartment;};
 public:
     Staff(string id, string name,string birthday,string address,string wdepartment);
     Staff(){};
     ~Staff(){};
+    virtual map<string,Staff>addMapStaff(string urlfile);
+    virtual void inputFile(string url,Staff staff);
     virtual void inputStaff();
-    virtual void printStaff();
-    virtual void inputStaffFile();
-    //virtual void readFileStaff();
+    virtual int checkId(string id,map<string,Staff> list);
+    virtual void printStaff(Staff staff);
+    virtual void outStaffFile();
+    virtual void SearchStaff();
 
 };
 
