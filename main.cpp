@@ -62,8 +62,8 @@ void run(){
 }
 int main()
 {
-   // run(); //<mo run>
-   DateStaffManagement a;
+    run(); //<mo run>
+  // DateStaffManagement a;
 //    a.createFileById("Ngocsssss");
    a.insertDateStatus("a","a","m");
     return 0;
