@@ -6,9 +6,11 @@
 #include <map>
 #include<cstring>
 #include <algorithm>
-
-
+#include <helpper.h>
+#include <iomanip>
 #include <stdlib.h>
+using namespace std;
+string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
 Staff::Staff(string id, string name,string birthday,string address,string wdepartment){
     _id = id;
     _name = name;
@@ -24,50 +26,20 @@ void Staff::inputFile(string url,Staff staff){
     string address = staff.getAddress();
     string wDepartment = staff.getWDepartment();
 
-    output <<id <<endl;
-    output <<name <<endl;
-    output <<birthday <<endl;
-    output <<address <<endl;
+    output <<id <<",";
+    output <<name <<",";
+    output <<birthday <<",";
+    output <<address <<",";
     output <<wDepartment <<endl;
 
     output.close();
 }
 
-map<string,Staff> Staff::addMapStaff(string urlfile){
-    map<string,Staff> mapStaff;
-    fstream output;
-    output.open(urlfile,ios::in);
-    string lineId,lineName,lineBirthday,linAddress,lineDepartment;
-    while (!output.eof()) {
-        getline(output,lineId);
-        getline(output,lineName);
-        getline(output,lineBirthday);
-        getline(output,linAddress);
-        getline(output,lineDepartment);
-
-        Staff staff = Staff(lineId,lineName,lineBirthday,linAddress,lineDepartment);
-        mapStaff.insert(pair<string,Staff>(lineId,staff));
-
-    }
-    output.close();
-    return  mapStaff;
-}
-int Staff::checkId(string id,map<string,Staff> list){
-
-    for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
-        if(it->first == id){
-            return 0;
-        }
-    }
-
-    return 1;
-}
 //
-
-vector<string> cutStringDate(string s){
+vector<string> cutStringDate(string s,string delimiter){
     vector<string> list;
 
-    string delimiter = "/";
+    //string delimiter = "/";
 
     size_t pos = 0;
     string token;
@@ -81,10 +53,52 @@ vector<string> cutStringDate(string s){
 
     return  list;
 }
+//
+map<string,Staff> Staff::addMapStaff(string urlfile){
+    map<string,Staff> mapStaff;
+    ifstream output;
+    output.open(urlfile,ios::in);
+
+    if(!output.is_open()){
+        cout << "ERROR: File Open" << '\n';
+    }
+    while (output.good()) {
+        string lineId,lineName,lineBirthday,linAddress,lineDepartment,line;
+        getline(output,lineId,',');
+        getline(output,lineName,',');
+        getline(output,lineBirthday,',');
+        getline(output,linAddress,',');
+        getline(output,lineDepartment,'\n');
+
+        Staff staff = Staff(lineId,lineName,lineBirthday,linAddress,lineDepartment);
+     // cout << lineId<<endl;
+        mapStaff.insert(pair<string,Staff>(lineId,staff));
+        //staff.~Staff();
+    }
+    output.close();
+       fflush(stdin);
+    return  mapStaff;
+
+}
+ map<string,Staff> list =  Staff::addMapStaff(urlFile);
+
+int Staff::checkId(string id,map<string,Staff> list){
+
+    for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
+        if(it->first == id){
+            return 0;
+        }
+    }
+
+    return 1;
+}
+//
+
+
 
 bool  checkYear(string date)
 {
-    vector<string> list = cutStringDate(date);
+    vector<string> list = cutStringDate(date,",");
     int year = stoi(list[2]);
 
     if(year < 1945 || year > 2002){
@@ -94,7 +108,7 @@ bool  checkYear(string date)
 }
 bool checkMonth(string date)
 {
-    vector<string> list = cutStringDate(date);
+    vector<string> list = cutStringDate(date,",");
     int month = stoi(list[1]);
     if(month < 1 || month > 12){
         return false;
@@ -103,7 +117,7 @@ bool checkMonth(string date)
 }
 bool checkDate(string date)
 {
-    vector<string> list = cutStringDate(date);
+    vector<string> list = cutStringDate(date,",");
     int day = stoi(list[0]);
     int month = stoi(list[1]);
     if(day > 0){
@@ -130,15 +144,15 @@ bool checkDate(string date)
 
 //
 void Staff::inputStaff(){
-    string urlFile = "E:\\QT\\project_staff\\fileStaff.txt";
-    map<string,Staff> mapStaff = addMapStaff(urlFile);
+   // string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
+
     cout <<"" <<endl;
     cin.ignore();
 
     cout << "Enter id staff : ";
     getline(cin,_id);
     while (true) {
-        if(checkId(_id,mapStaff) == 0){
+        if(checkId(_id,list) == 0){
 
 
             cout << "ID contained in the file.Enter id staff : ";
@@ -189,22 +203,20 @@ void Staff::inputStaff(){
 }
 
 void Staff::printStaff(Staff staff){
-    cout <<"" <<endl;
-    cout << "Id staff: " << staff.getId() << endl;
-    cout << "Name staff: " << staff.getName() << endl;
-    cout << "Date of birth: " << staff.getBirthday() << endl;
-    cout << "Address: " << staff.getAddress() << endl;
-    cout << "Department: " << staff.getWDepartment() << endl;
-    cout <<"" <<endl;
+
+    cout <<setw(10)<<staff.getId()<< setw(30) << staff.getName() << setw(20)
+                << staff.getBirthday() << setw(30) << staff.getAddress()<<setw(20)<<staff.getWDepartment() << "\n";
 
 }
 
 void Staff::outStaffFile(){
-    string urlFile = "E:\\QT\\project_staff\\fileStaff.txt";
-    map<string,Staff> list =  Staff::addMapStaff(urlFile);
+    //string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
+//    map<string,Staff> list =  Staff::addMapStaff(urlFile);
     map<string,Staff>::iterator itr;
 
-    cout << "The number of employees on the list:  "<< list.size();
+    cout << "The number of employees on the list:  "<< list.size() << endl;
+    cout <<setw(10)<<"Id"<< setw(30) << "Name" << setw(20)
+                << "Birthday" << setw(30) << "Address"<<setw(20)<<"WDepartment" << "\n";
     for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
         printStaff(it->second);
     }
@@ -232,7 +244,7 @@ int isSubstring(string s1, string s2)
 void Staff::SearchStaff(){
 
 
-    string urlFile = "E:\\QT\\project_staff\\fileStaff.txt";
+   // string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
     map<string,Staff> list =  Staff::addMapStaff(urlFile);
     map<string,Staff>::iterator itr;
 

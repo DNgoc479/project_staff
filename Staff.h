@@ -12,11 +12,11 @@ private:
     string _address;
     string _wDepartment; // bo phan cong tac
 public:
-    void setId(string id){};
-    void setName(string name){};
-    void setBirthday(string birthday){};
-    void setAddress(string address){};
-    void setWDepartment(string wDepartment){};
+//    void setId(string id){};
+//    void setName(string name){};
+//    void setBirthday(string birthday){};
+//    void setAddress(string address){};
+//    void setWDepartment(string wDepartment){};
 
     string getId(){return  this->_id;};
     string getName(){return  this->_name;};
@@ -27,7 +27,7 @@ public:
     Staff(string id, string name,string birthday,string address,string wdepartment);
     Staff(){};
     ~Staff(){};
-    virtual map<string,Staff>addMapStaff(string urlfile);
+    static map<string,Staff>addMapStaff(string urlfile);
     virtual void inputFile(string url,Staff staff);
     virtual void inputStaff();
     virtual int checkId(string id,map<string,Staff> list);
