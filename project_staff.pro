@@ -4,14 +4,15 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        DateStaffManagement.cpp \
+    Helpper.cpp \
+        InfoAttendance.cpp \
         Staff.cpp \
         main.cpp
 
 HEADERS += \
-    DateStaffManagement.h \
-    Staff.h \
-    helpper.h
+    Helpper.h \
+    InfoAttendance.h \
+    Staff.h
 
 DISTFILES += \
     fileStaff.csv

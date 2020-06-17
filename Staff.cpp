@@ -6,19 +6,22 @@
 #include <map>
 #include<cstring>
 #include <algorithm>
-#include <helpper.h>
+#include <Helpper.h>
 #include <iomanip>
 #include <stdlib.h>
+#include <FileIoUtils.h>
 using namespace std;
-string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
-Staff::Staff(string id, string name,string birthday,string address,string wdepartment){
-    _id = id;
-    _name = name;
-    _birthday = birthday;
-    _address = address;
-    _wDepartment = wdepartment;
+string urlFile = "C:\\Users\\DNgoc\\Desktop\\ImportData.csv";
+Staff::Staff(string id, string name,string birthday,string address,string wdepartment):
+    _id(id),
+    _name(name),
+    _birthday(birthday),
+    _address(address),
+    _wDepartment(wdepartment)
+{
 }
 void Staff::inputFile(string url,Staff staff){
+    cout <<"co sddvsv";
     fstream output(url, ios::app);;
     string id = staff.getId();
     string name = staff.getName();
@@ -35,25 +38,7 @@ void Staff::inputFile(string url,Staff staff){
     output.close();
 }
 
-//
-vector<string> cutStringDate(string s,string delimiter){
-    vector<string> list;
 
-    //string delimiter = "/";
-
-    size_t pos = 0;
-    string token;
-    while ((pos = s.find(delimiter)) != string::npos) {
-        token = s.substr(0, pos);
-        list.push_back(token);
-        //cout << token << endl;
-        s.erase(0, pos + delimiter.length());
-    }
-    list.push_back(s);
-
-    return  list;
-}
-//
 map<string,Staff> Staff::addMapStaff(string urlfile){
     map<string,Staff> mapStaff;
     ifstream output;
@@ -81,6 +66,8 @@ map<string,Staff> Staff::addMapStaff(string urlfile){
 
 }
  map<string,Staff> list =  Staff::addMapStaff(urlFile);
+//map<string,Staff> list =  FileIoUtils::readEmployeeFromCsv(urlFile);
+
 
 int Staff::checkId(string id,map<string,Staff> list){
 
@@ -94,51 +81,6 @@ int Staff::checkId(string id,map<string,Staff> list){
 }
 //
 
-
-
-bool  checkYear(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int year = stoi(list[2]);
-
-    if(year < 1945 || year > 2002){
-        return false;
-    }
-    return true;
-}
-bool checkMonth(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int month = stoi(list[1]);
-    if(month < 1 || month > 12){
-        return false;
-    }
-    return true;
-}
-bool checkDate(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int day = stoi(list[0]);
-    int month = stoi(list[1]);
-    if(day > 0){
-        if(month == 2){
-            if(day > 29){
-                return false;
-            }
-        }
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
-            if(day > 31){
-                return false;
-            }
-        }
-        if (month == 4 || month == 6 || month == 11){
-            if(day > 30){
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 
 
@@ -167,12 +109,6 @@ void Staff::inputStaff(){
 
     cout << "Enter birthday: ";
     getline(cin,_birthday);
-//    bool checkBirthday = checkDate(_birthday) && checkMonth(_birthday) && checkYear(_birthday);
-//    while (checkBirthday) {
-//        cout << "Enter birthday again: ";
-//        getline(cin,_birthday);
-//        bool checkBirthday = checkDate(_birthday) && checkMonth(_birthday) && checkYear(_birthday);
-//    }
 
     cout << "Enter address: ";
     getline(cin,_address);
@@ -245,7 +181,7 @@ void Staff::SearchStaff(){
 
 
    // string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
-    map<string,Staff> list =  Staff::addMapStaff(urlFile);
+    //map<string,Staff> list =  Staff::addMapStaff(urlFile);
     map<string,Staff>::iterator itr;
 
 
