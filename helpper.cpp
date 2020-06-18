@@ -3,6 +3,7 @@
 #include <sstream>
 #include  <string>
 #include <fstream>
+#include <regex>
 //#include <specstrings.h>
 using namespace  std;
 int Helpper::numberLine(){
@@ -48,52 +49,7 @@ int Helpper:: checkId(map<string,Staff> list, string id) // trùng id trả về
     }
     return 1;
 }
-int Helpper:: checkDateOfBirth(string dateOfBirth){
-    for (int i = 0; i < dateOfBirth.length(); i++) {
-        if ((dateOfBirth[i] < 47) || (dateOfBirth[i] > 57)) {
-            return 0;
-        }
-    }
-    vector<string> birth;
-    while(!dateOfBirth.empty()){
-        birth.push_back(dateOfBirth.substr(0, dateOfBirth.find("/")));
-        if (dateOfBirth.find("/") > dateOfBirth.size()) {
-            break;
-        }
-        dateOfBirth.erase(0, dateOfBirth.find("/") + 1);
-    }
-    if (birth.size() != 3) {
-        return 0;
-    } else {
-        if ((stoi(birth[0], 0, 10) > 31) || (stoi(birth[1], 0, 10) > 12)) {
-            return 0;
-        } else {
-            switch (stoi(birth[1], 0, 10))
-            {
-            case 2:
-                if (stoi(birth[0], 0, 10) > 29) {
-                    return 0;
-                }
-                if (stoi(birth[0], 0, 10) == 29){
-                    if((stoi(birth[2], 0, 10) % 400 == 0) || ((stoi(birth[2], 0, 10) % 4 == 0) && (stoi(birth[2], 0, 10) % 100 != 0))) {
-                        return 1;
-                    }
-                    return 0;
-                }
-                return 1;
-                break;
 
-            case 4: case 6: case 9: case 11:
-                if (stoi(birth[0], 0, 10) > 30) {
-                    return 0;
-                }
-                return 1;
-                break;
-            }
-        }
-    }
-    return 1;
-}
 
 int Helpper ::checkStatus(string status){ // hop le return 1 , khong hop le return 0
     if(status =="DL"||status =="DLNN"||status =="N"||status =="NP"){
@@ -122,66 +78,42 @@ vector<string> cutStringDate(string s,string delimiter){
 }
 
 
-int  checkYear(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int year = stoi(list[2]);
+int checkDateStaff(string date) {
+    if(!regex_match (date, regex("^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}$"))) {
+        return 1;
+    }
+    vector<string> list = Helpper::split(date,'/') ;
+    stringstream s(date);
 
-    if(year < 1945 || year > 2002){
-        return 0;
-    }
-    return 1;
-}
-int  checkYearWork(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int year = stoi(list[2]);
+    string tmp;
+    int i = 0;
 
-    if(year < 2017 || year > 2020){
+    for (int j=0 ;j<list.size();j++) {
+        cout << list[j] <<endl;
+    }
+    int day, month, year;
+
+    day = stoi(list[0]);
+    month =stoi(list[1]);
+    year = stoi(list[2]);
+
+    if (day < 1 || day > 31 || month < 1 || month > 12) {
         return 0;
     }
-    return 1;
-}
-int checkMonth(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int month = stoi(list[1]);
-    if(month < 1 || month > 12){
+    if ((month==4 || month==6 || month==9|| month==11) && day == 31) {
         return 0;
     }
+    if (month == 2 && (day > 29 || (day == 29 && !(year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))))) {
+        return 0;
+    }
+
+    if (year < 2017 || year > 2020) {
+        return 0;
+    }
+
     return 1;
 }
-bool checkDate(string date)
-{
-    vector<string> list = cutStringDate(date,",");
-    int day = stoi(list[0]);
-    int month = stoi(list[1]);
-    if(day > 0){
-        if(month == 2){
-            if(day > 29){
-                return 0;
-            }
-        }
-        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12){
-            if(day > 31){
-                return 0;
-            }
-        }
-        if (month == 4 || month == 6 || month == 11){
-            if(day > 30){
-                return 0;
-            }
-        }
-    }
-    return 1;
-}
-int Helpper::checkDateStaff(string date){
-    vector<string> listDate = cutStringDate(date,"/");
-    if(checkDate(listDate[0]) && checkMonth(listDate[1]) && checkYear(listDate[2])){
-        return  1;
-    }
-    return 0;
-}
+
 
 
 

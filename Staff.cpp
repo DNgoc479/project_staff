@@ -9,9 +9,9 @@
 #include <Helpper.h>
 #include <iomanip>
 #include <stdlib.h>
-#include <FileIoUtils.h>
+
 using namespace std;
-string urlFile = "C:\\Users\\DNgoc\\Desktop\\ImportData.csv";
+string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
 Staff::Staff(string id, string name,string birthday,string address,string wdepartment):
     _id(id),
     _name(name),
@@ -21,7 +21,7 @@ Staff::Staff(string id, string name,string birthday,string address,string wdepar
 {
 }
 void Staff::inputFile(string url,Staff staff){
-    cout <<"co sddvsv";
+    //cout <<"co sddvsv";
     fstream output(url, ios::app);;
     string id = staff.getId();
     string name = staff.getName();
@@ -66,7 +66,7 @@ map<string,Staff> Staff::addMapStaff(string urlfile){
 
 }
  map<string,Staff> list =  Staff::addMapStaff(urlFile);
-//map<string,Staff> list =  FileIoUtils::readEmployeeFromCsv(urlFile);
+
 
 
 int Staff::checkId(string id,map<string,Staff> list){
@@ -137,7 +137,10 @@ void Staff::inputStaff(){
 
     fflush(stdin);
 }
-
+void formPrint(){
+    cout <<setw(10)<<"ID"<< setw(30) << "NAME" << setw(20)
+                << "BIRTHDAY" << setw(30) << "ADDRESS    "<<setw(20)<<"DEPARTMENT" << "\n";
+}
 void Staff::printStaff(Staff staff){
 
     cout <<setw(10)<<staff.getId()<< setw(30) << staff.getName() << setw(20)
@@ -151,8 +154,7 @@ void Staff::outStaffFile(){
     map<string,Staff>::iterator itr;
 
     cout << "The number of employees on the list:  "<< list.size() << endl;
-    cout <<setw(10)<<"Id"<< setw(30) << "Name" << setw(20)
-                << "Birthday" << setw(30) << "Address"<<setw(20)<<"WDepartment" << "\n";
+    formPrint();
     for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
         printStaff(it->second);
     }
@@ -177,6 +179,7 @@ int isSubstring(string s1, string s2)
 
     return -1;
 }
+
 void Staff::SearchStaff(){
 
 
@@ -208,6 +211,7 @@ void Staff::SearchStaff(){
             cout << "Enter staff id you are looking for:= " ;
             cin >> idSearch;
             int check = 0;
+            formPrint();
             for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
                 if(it->first == idSearch){
                     printStaff(it->second);
@@ -229,6 +233,7 @@ void Staff::SearchStaff(){
             cout << "Enter name you are looking for:= ";
             getline(cin,name);
             int check = 0;
+            formPrint();
             for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
                 if(isSubstring(name,it->second.getName()) >= 0){
 
@@ -255,6 +260,7 @@ void Staff::SearchStaff(){
             getline(cin,address);
             int check = 0;
             cout << "----= LIST ADSRESS = "<<address <<"=----" <<endl;
+            formPrint();
             for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
                 if(isSubstring(address,it->second.getAddress()) >= 0){
 
@@ -279,8 +285,9 @@ void Staff::SearchStaff(){
 
             cout << "Enter Department you are looking for:= ";
             getline(cin,department);
-            cout << department <<"-------------";
+            cout << department <<"-------------"<< endl;
             int check = 0;
+            formPrint();
             for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
                 if(isSubstring(department,it->second.getWDepartment()) >= 0){
                     printStaff(it->second);

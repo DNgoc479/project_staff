@@ -7,12 +7,14 @@ SOURCES += \
     Helpper.cpp \
         InfoAttendance.cpp \
         Staff.cpp \
+    TimekeepingHistory.cpp \
         main.cpp
 
 HEADERS += \
     Helpper.h \
     InfoAttendance.h \
-    Staff.h
+    Staff.h \
+    TimekeepingHistory.h
 
 DISTFILES += \
     fileStaff.csv

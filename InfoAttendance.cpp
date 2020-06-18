@@ -4,35 +4,48 @@
 #include <map>
 #include <fstream>
 #include <Staff.h>
-#include <helpper.h>
+#include <Helpper.h>
 #include "InfoAttendance.h"
 using namespace  std;
 
 void InfoAttendance::read(map<string, Staff> list){
-    string url = "C:\\Users\\DNgoc\\Desktop\\ListNv";
+    cin.ignore();
+    string url = "C:\\Users\\DNgoc\\Desktop\\ListNv\\";
     string idStaff;
     cout <<"Enter the employee id you want to time: ";
-    cin >> idStaff;
+//    cin >> idStaff;
+    getline(cin,idStaff);
     while(Staff::checkId(idStaff,list) == 1){
         cout << "Enter the employee id you want to time! again: "<< endl;
-        cin >>idStaff;
+       // cin >>idStaff;
+        getline(cin,idStaff);
     }
     ifstream ifs(url+idStaff+".csv", ios::in);
+
+
     cout<< "Enter the date you want to timekeeping: ";
     string date;
-    cin >> date;
+    //cin >> date;
+    getline(cin,date);
+//    while (Helpper::checkDateStaff(date) == 0) {
+//        cout<< "Enter the date you want to timekeeping(dd/mm/yyyy): ";
+//       // cin >> date;
+//        getline(cin,date);
+//    }
 
-
-    cout<< "Enter status of employee to work (DL-DLNN-N-NP)" <<endl;
+    cout<< "Enter status of employee to work (DL-DLNN-N-NP)";
     string status;
-    cin >> status;
+//    cin >> status;
+    getline(cin,status);
     while(Helpper::checkStatus(status) ==0){
-        cout<<"dinh dang sai , xin nhap lai "<<endl;
-        cin >> status;
+        cout<<"dinh dang sai , xin nhap lai ";
+        //cin >> status;
+         getline(cin,status);
     }
 
+    fflush(stdin);
 
-
+//vector<string> listdate = Helpper::split(date,'/');
     // ghi vào
     fstream output(url+idStaff+".csv", ios::app);
     output << date<<","<<status<<endl;
