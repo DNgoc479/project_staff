@@ -4,6 +4,7 @@
 #include  <string>
 #include <fstream>
 #include <regex>
+#include <ctime>
 //#include <specstrings.h>
 using namespace  std;
 int Helpper::numberLine(){
@@ -11,7 +12,7 @@ int Helpper::numberLine(){
     char c;
     int numchars, numlines;
 
-    f1.open("C:\\Users\\DNgoc\Desktop\\ImportData.csv");
+    f1.open("C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\fileStaff.csv");
 
     numchars = 0;
     numlines = 0;
@@ -27,7 +28,7 @@ int Helpper::numberLine(){
 
     return(numlines);
 }
-vector<string> Helpper ::split(const string &s, char delim){
+vector<string> Helpper::split(const string &s, char delim){
     vector<string> result;
     stringstream ss (s);
     string item;
@@ -86,9 +87,9 @@ int checkDateStaff(string date) {
     stringstream s(date);
 
     string tmp;
-    int i = 0;
+    //int i = 0;
 
-    for (int j=0 ;j<list.size();j++) {
+    for (int j=0 ;j<=list.size();j++) {
         cout << list[j] <<endl;
     }
     int day, month, year;
@@ -107,8 +108,18 @@ int checkDateStaff(string date) {
         return 0;
     }
 
-    if (year < 2017 || year > 2020) {
+    time_t t = time(0);
+    struct tm * timeStruct = localtime(&t);
+    int currentY = timeStruct->tm_year + 1900;
+    int currentM = timeStruct->tm_mon + 1;
+    int currentD = timeStruct->tm_mday;
+    if (year < 1900 || year > currentY) {
         return 0;
+    }
+    if (year == currentY) {
+        if (month > currentM || (month == currentM && day > currentD)) {
+            return 0;
+        }
     }
 
     return 1;

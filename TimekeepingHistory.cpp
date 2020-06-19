@@ -9,12 +9,16 @@
 #include <sstream>
 #include <fstream>
 #include <stdlib.h>
+
+
 // lay ra thong tin cac trang thai lam viec trong thang cua staff
 TimekeepingHistory::TimekeepingHistory(string month,string year,int numberDayDL,int numberDayDLNN,int numberDayN,int numberDayNP):
     _month(month),_year(year),_numberDaysDL(numberDayDL),
     _numberDaysN(numberDayN),_numberDaysNP(numberDayNP),_numberDaysDLNN(numberDayDLNN)
-{}
-string TimekeepingHistory::url = "C:\\Users\\DNgoc\\Desktop\\ListNv\\";
+{
+
+}
+string TimekeepingHistory::url = "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\ListDSNV\\";
 map<string,TimekeepingHistory> TimekeepingHistory::readFileStaff(string idStaff,map<string,Staff> listStaff,string month){
     map<string,TimekeepingHistory> list;
     ifstream output;
@@ -25,7 +29,7 @@ map<string,TimekeepingHistory> TimekeepingHistory::readFileStaff(string idStaff,
     //        cout << "Enter id staff again: ";
     //        cin >>idStaff;
     //    }
-    string urlFile ="C:\\Users\\DNgoc\\Desktop\\ListNv\\"+idStaff+".csv";
+    string urlFile ="C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\ListDSNV\\"+idStaff+".csv";
     output.open(urlFile,ios::in);
 
     if(!output.is_open()){
@@ -36,7 +40,8 @@ map<string,TimekeepingHistory> TimekeepingHistory::readFileStaff(string idStaff,
     int N = 0;
     int NP = 0;
     while (output.good()) {
-        string date,status;
+        string date,status,a;
+        getline(output,date,':');
         getline(output,date,',');
         getline(output,status,':');
 
@@ -79,11 +84,9 @@ int TimekeepingHistory::inputNumber(string month){
 }
 void TimekeepingHistory::inputFileAttendance(string urlFile,string idStaff, map<string, TimekeepingHistory> list){
 
-
-
     fstream inputFile(urlFile+idStaff+".csv", ios::app);
 
-    cout <<"size = " << list.size();
+    //cout <<"size = " << list.size();
     for(map<string,TimekeepingHistory>::iterator it = list.begin();it != list.end();it++){
 
         inputFile<<"THANG:"+it->first<<",";

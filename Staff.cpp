@@ -11,7 +11,7 @@
 #include <stdlib.h>
 
 using namespace std;
-string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
+string urlFile = "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\fileStaff.csv";
 Staff::Staff(string id, string name,string birthday,string address,string wdepartment):
     _id(id),
     _name(name),
@@ -86,7 +86,7 @@ int Staff::checkId(string id,map<string,Staff> list){
 
 //
 void Staff::inputStaff(){
-   // string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
+   // string urlFile = "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\fileStaff.csv";
 
     cout <<"" <<endl;
     cin.ignore();
@@ -149,7 +149,7 @@ void Staff::printStaff(Staff staff){
 }
 
 void Staff::outStaffFile(){
-    //string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
+    //string urlFile = "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\fileStaff.csv";
 //    map<string,Staff> list =  Staff::addMapStaff(urlFile);
     map<string,Staff>::iterator itr;
 

@@ -17,7 +17,7 @@ void menu(){
     cout <<"= 2-Tim Thong tin nhan vien               =" << endl;
     cout <<"= 3-In tat ca cac nhan vien               =" << endl;
     cout <<"= 4-Tao file luu nhan vien                =" << endl;
-    cout <<"= 5-nhap thong tin diem danh nhan vien    =" << endl;
+    cout <<"= 5-Nhap thong tin diem danh nhan vien    =" << endl;
     cout <<"= 6-Lich su diem danh nhan vien           =" << endl;
     cout <<"===========================================" <<endl;
     cout << "Chon chuc nang (1-6):" << endl;
@@ -29,7 +29,7 @@ void run(){
     Staff *staff;
 
     int choice;
-    string urlFile = "E:\\QT\\project_staff\\fileStaff.csv";
+    string urlFile = "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\fileStaff.csv";
     staff = new Staff();
     map<string,Staff> list = staff->addMapStaff(urlFile);
     do {
@@ -62,23 +62,23 @@ void run(){
         }case 4:
         {
 
-            for(map<string,Staff>::iterator it = list.begin();it != list.end();it++){
+            for(map<string,Staff>::iterator it = list.begin()++;it != list.end();it++){
                 // tao file nhan vien diem danh
-                std::ofstream o( "C:\\Users\\DNgoc\\Desktop\\ListNv\\"+it->first+".csv");
+                std::ofstream o( "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\ListDSNV\\"+it->first+".csv");
             }
             cout << "File creation successful !!! " <<endl;
             break;
         }
         case 5:
         {
-            cout << "------= Nhap thong tin diem danh=------ " <<endl;
+            cout << "------= NHAP THONG TIN DIEM DANH =------ " <<endl;
             InfoAttendance::read(list);
 
             break;
         }
         case 6:
         {
-            cout << "------= lICH SU LAM VIEC CUA NHAN VIEN=------ " <<endl;
+            cout << "------= lICH SU LAM VIEC CUA NHAN VIEN =------ " <<endl;
             string month;
             cout << "Nhap Thang ban muon diem danh: ";
             cin >> month;
@@ -95,19 +95,18 @@ void run(){
             }
 
             map<string,TimekeepingHistory> listT = TimekeepingHistory::readFileStaff(idStaff,list,month);
-             cout <<"check = " <<listT.empty();
+//             cout <<"check = " <<listT.empty();
 //            int check = listT.empty();
 //            if(check == 0){
 //                break;
 //            }
             for(map<string,TimekeepingHistory>::iterator it = listT.begin();it != listT.end();it++){
-                cout <<"so ngay di lam         := " <<it->second.getNumberDaysDL()<< endl;
-                cout <<"so ngay ngay nghi      := " <<it->second.getNumberDaysN()<< endl;
-                cout <<"so ngay di lam nua ngay:= " <<it->second.getNumberDaysDLNN()<< endl;
+                cout <<"So ngay di lam         := " <<it->second.getNumberDaysDL()<< endl;
+                cout <<"So ngay ngay nghi      := " <<it->second.getNumberDaysN()<< endl;
+                cout <<"So ngay di lam nua ngay:= " <<it->second.getNumberDaysDLNN()<< endl;
                 cout <<"so ngay nghi phep      := " <<it->second.getNumberDaysNP()<< endl;
-
             }
-            string urlFileHistory = "C:\\Users\\DNgoc\\Desktop\\HistoryDD\\";
+            string urlFileHistory = "C:\\Users\\admin\\Desktop\\GitHub\\project_staff\\HistoryDD\\";
             std::ofstream o( urlFile+idStaff+".csv");
 
             o.close();
